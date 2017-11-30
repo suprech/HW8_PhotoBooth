@@ -80,7 +80,6 @@ def Filter_Back():
     guiPictureBefore.set(latestPhoto)
 
 
-
 def SendEmail():
     info("Upload Success", "uploaded")
     pass
