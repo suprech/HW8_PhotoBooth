@@ -139,30 +139,6 @@ def Grey():
     guiPictureBefore.set('temp.gif')
 
 
-
-
-
-class CImgObj:
-    def __init__(self, latestPhoto, im, tempImg):
-        self.directory = latestPhoto 
-        self.im = im
-        self.tempImg = tempImg
-
-
-    def Update(self, im, tempImg):
-        self.im = im
-        self.tempImg = tempImg
-
-
-    def Rendering(self):
-        guiPictureBefore.set('temp.gif')
-        
-
-    def SaveImg(self):
-        im.save('temp.jpg')
-        im.save('temp.gif', 'gif')
-
-
     #######################################################
     # Filtering
     #######################################################
@@ -175,18 +151,6 @@ class CImgObj:
 
     def Grey(self):
         pass
-
-
-class CTest():
-    def __init__(self, a, b):
-        self.num1 = a
-        self.num2 = b
-
-    def Adder(self):
-        return self.num1 + self.num2
-
-    def TestFunc(self):
-        print("Hello WWWWW")
 
 
 if __name__ == '__main__':
@@ -208,7 +172,6 @@ if __name__ == '__main__':
     ButtonForPrint = PushButton(box, PhotoPrinter, text="Print", grid = [0,4])
 
 
-    TASD = CTest(10, 20)
     # button rendering : Filter Effect menu
     box2 = Box(app, layout="grid", grid=[2,0])
     ButtonTemp1 = PushButton(box2, Sepia, text="Sepia", grid = [0,0])
