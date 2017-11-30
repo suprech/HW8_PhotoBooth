@@ -1,29 +1,11 @@
-from PIL import *
+#from PIL import * 
 from PIL import Image
 from PIL import ImageFilter
 
 
-#im = Image.open('test.jpg')
-#blurImage = im.filter(ImageFilter.BLUR)
-
-print("Image Processing...")
-
-
-
-'''
-밝기 조절
-out = im.point(lambda i : i * 2)
-'''
-
-# img = Image.open('test.jpg')
-# GreyScale(img)
-def GreyScale(ImgObj):
-    return ImgObj.convert(mode='L')
-
-
-def Brightness(ImgObj, scale):
-    return ImgObj.point(lambda i : i * scale)
-
+##################################################
+# Functions 
+##################################################
 
 def make_linear_ramp(white):
     # putpalette expects [r,g,b,r,g,b,...]
@@ -34,28 +16,56 @@ def make_linear_ramp(white):
     return ramp
 
 
-# make sepia ramp (tweak color as necessary)
-sepia = make_linear_ramp((255, 240, 190))
+##################################################
+# Filter Option
+##################################################
 
-im = Image.open("test.jpg")
-
-# convert to grayscale
-if im.mode != "L":
-    im = im.convert("L")
-
-
-# apply sepia palette
-im.putpalette(sepia)
-
-# convert back to RGB so we can save it as JPEG
-# (alternatively, save it in PNG or similar)
-im = im.convert("RGB")
-
-im.save("file.jpg")
+# Brightness
+def Brightness(ImgObj, scale):
+    return ImgObj.point(lambda i : i * scale)
 
 
-print("Done")
+# Blur
+def BlurImg(Img):
+    return Img.filter(ImageFilter.BLUR)
+
+
+# GreyScale(img)
+def GreyScale(ImgObj):
+    return ImgObj.convert(mode='L')
+
+
+# Sepia Filter
+def SepiaFilter(Img):
+
+    # make sepia ramp (tweak color as necessary)
+    sepia = make_linear_ramp((255, 240, 190))
+
+    # convert to grayscale
+    if Img.mode != "L":
+        Img = Img.convert("L")
+
+    # apply sepia palette
+    Img.putpalette(sepia)
+
+    # convert back to RGB so we can save it as JPEG
+    # (alternatively, save it in PNG or similar)
+    Img = Img.convert("RGB")
+    Img.save("file.jpg")
+
+    return Img
 
 
 
+if __name__ == '__main__':
+    print("Image Processing...")
+
+
+    # Sepia Filter
+    im = Image.open('test.jpg')
+    im = BlurImg(im)
+
+    im.save('file.jpg')
+
+    print("Done")
 

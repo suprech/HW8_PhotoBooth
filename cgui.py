@@ -20,6 +20,7 @@ tempImg = Image.open(latestPhoto)
 
 
 
+
 #######################################################
 # PiCamera setting
 #######################################################
@@ -139,9 +140,6 @@ def Grey():
     guiPictureBefore.set('temp.gif')
 
 
-
-
-
 class CImgObj:
     def __init__(self, latestPhoto, im, tempImg):
         self.directory = latestPhoto 
@@ -155,22 +153,22 @@ class CImgObj:
 
 
     def Rendering(self):
-        guiPictureBefore.set('temp.gif')
+        global latestPhoto
+        guiPictureBefore.set(latestPhoto)
         
 
     def SaveImg(self):
-        im.save('temp.jpg')
-        im.save('temp.gif', 'gif')
+        self.im.save('temp.jpg')
+        self.im.save('temp.gif', 'gif')
 
 
     #######################################################
     # Filtering
     #######################################################
     def Sepia(self):
-        im = Filter.SepiaFilter(self.im)
+        self.im = Filter.SepiaFilter(self.im)
         self.SaveImg()
         self.Rendering()
-        
 
 
     def Grey(self):
@@ -190,6 +188,8 @@ class CTest():
 
 
 if __name__ == '__main__':
+    # class object
+    ImgObj = CImgObj(latestPhoto, im, tempImg)
 
     # gui init
     app = App(title = "PHOTOBOOTH", height = 800, width = 800, layout = 'grid')
@@ -211,7 +211,7 @@ if __name__ == '__main__':
     TASD = CTest(10, 20)
     # button rendering : Filter Effect menu
     box2 = Box(app, layout="grid", grid=[2,0])
-    ButtonTemp1 = PushButton(box2, Sepia, text="Sepia", grid = [0,0])
+    ButtonTemp1 = PushButton(box2, ImgObj.Sepia, text="Sepia", grid = [0,0])
     ButtonTemp2 = PushButton(box2, Grey, text="GreyScale", grid = [0,1])
     ButtonTemp3 = PushButton(box2, TASD.TestFunc, text="ClassTest", grid = [0,2])
 

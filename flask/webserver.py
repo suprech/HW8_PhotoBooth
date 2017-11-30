@@ -2,7 +2,9 @@ from flask import Flask
 from flask import render_template, send_file
 import os
 
+
 app = Flask(__name__)
+
 
 ###################################################
 # home page
@@ -10,6 +12,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 ###################################################
 # test page
@@ -30,13 +33,14 @@ def return_file(filename):
 ###################################################
 @app.route('/camera_image')
 def camera_image():
-    camera_path = '/home/pi/HW8_PhotoBooth/camera/screenshot/'
+    camera_path = '/home/pi/HW8_PhotoBooth/ImageStorage/'
     return render_template('camera_image.html', tree=make_tree(camera_path))
 
 
-@app.route('/screenshots/<filename>')
+@app.route('/camera_image/<filename>')
 def screenshots(filename):
-    return send_file('/home/pi/HW8_PhotoBooth/camera/screenshot/' + filename, attachment_filename=filename)
+    return send_file('/home/pi/HW8_PhotoBooth/ImageStorage/' + filename, 
+            attachment_filename=filename)
 
 
 # rendering file tree 
