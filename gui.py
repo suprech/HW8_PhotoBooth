@@ -11,7 +11,7 @@ from PIL import Image
 
 
 #######################################################
-# Objects initialization
+# Global Objects initialization
 #######################################################
 photoOutput = str()
 latestPhoto = os.getcwd() + '/latest.gif'
@@ -34,8 +34,7 @@ camera.preview.fullscreen = False
 
 #######################################################
 # Functions for PhotoBooth
-#######################################################
-def TakePicture():
+####################################################### def TakePicture():
     global photoOutput
     global latestPhoto
     global im
@@ -137,6 +136,9 @@ def Grey():
     guiPictureBefore.set('rendering.gif')
 
 
+#######################################################
+# Voice Recognition (Google Cloud Speech)
+#######################################################
 def voice():
     while True:
         print("Hello World")
