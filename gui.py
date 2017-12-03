@@ -34,7 +34,8 @@ camera.preview.fullscreen = False
 
 #######################################################
 # Functions for PhotoBooth
-####################################################### def TakePicture():
+####################################################### 
+def TakePicture():
     global photoOutput
     global latestPhoto
     global im
