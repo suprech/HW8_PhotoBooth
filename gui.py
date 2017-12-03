@@ -138,6 +138,7 @@ def Grey():
     guiPictureBefore.set('temp.gif')
 
 
+'''
     #######################################################
     # Filtering
     #######################################################
@@ -150,6 +151,7 @@ def Grey():
 
     def Grey(self):
         pass
+'''
 
 
 if __name__ == '__main__':
@@ -175,7 +177,6 @@ if __name__ == '__main__':
     box2 = Box(app, layout="grid", grid=[2,0])
     ButtonTemp1 = PushButton(box2, Sepia, text="Sepia", grid = [0,0])
     ButtonTemp2 = PushButton(box2, Grey, text="GreyScale", grid = [0,1])
-    ButtonTemp3 = PushButton(box2, TASD.TestFunc, text="ClassTest", grid = [0,2])
 
 
     # picture rendering
