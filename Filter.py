@@ -51,7 +51,7 @@ def SepiaFilter(Img):
     # convert back to RGB so we can save it as JPEG
     # (alternatively, save it in PNG or similar)
     Img = Img.convert("RGB")
-    Img.save("file.jpg")
+    #Img.save("file.jpg") # deprecated for gui.py
 
     return Img
 

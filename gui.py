@@ -1,11 +1,11 @@
 import os
-
+import shutil
 import datetime
-from time import gmtime, strftime
+from time import gmtime, strftime, sleep
+import threading
 
 import picamera
 from guizero import *
-
 import Filter
 from PIL import Image
 
@@ -76,6 +76,7 @@ def Filter_Back():
 
     # image restore
     im = tempImg
+    im.save('temp.jpg')
 
     guiPictureBefore.set(latestPhoto)
 
@@ -86,13 +87,11 @@ def SendEmail():
 
 
 def UploadToServer():
+    savename = datetime.datetime.now().strftime('%y%m%d-%H%M%s') + '.jpg'
 
-
-
-
+    shutil.copyfile('temp.jpg', '/home/pi/HW8_PhotoBooth/ImageStorage/' + savename)
 
     info("Upload Success", "uploaded")
-    pass
 
 
 def PhotoPrinter():
@@ -116,8 +115,8 @@ def Sepia():
     im.save('temp.jpg')
 
     # gui rendering
-    im.save('temp.gif', 'gif')
-    guiPictureBefore.set('temp.gif')
+    im.save('rendering.gif', 'gif')
+    guiPictureBefore.set('rendering.gif')
 
 
 def Grey():
@@ -134,31 +133,30 @@ def Grey():
     im.save('temp.jpg')
 
     # gui rendering
-    im.save('temp.gif', 'gif')
-    guiPictureBefore.set('temp.gif')
+    im.save('rendering.gif', 'gif')
+    guiPictureBefore.set('rendering.gif')
 
 
-'''
-    #######################################################
-    # Filtering
-    #######################################################
-    def Sepia(self):
-        im = Filter.SepiaFilter(self.im)
-        self.SaveImg()
-        self.Rendering()
-        
-
-
-    def Grey(self):
-        pass
-'''
+def voice():
+    while True:
+        print("Hello World")
+        sleep(1)
 
 
 if __name__ == '__main__':
 
+    #######################################################
+    # multi-threading for voice recognization
+    #######################################################
+    t = threading.Thread(target=voice)
+    t.start()
+
+
+    #######################################################
+    # Gui Setting
+    #######################################################
     # gui init
     app = App(title = "PHOTOBOOTH", height = 800, width = 800, layout = 'grid')
-
 
     # message rendering
     message1 = Text(app, "Picture", grid = [3,0])
@@ -181,10 +179,7 @@ if __name__ == '__main__':
 
     # picture rendering
     guiPictureBefore = Picture(app, 'init.gif', grid = [4,0])
-    #guiPictureAfter = Picture(app, 'init.gif', grid = [3,1])
 
-
+    
+    # gui display start
     app.display()
-
-
-
