@@ -15,7 +15,8 @@ from PIL import Image
 
 
 #######################################################
-# Global Objects initialization #######################################################
+# Global Objects initialization
+#######################################################
 photoOutput = str()
 latestPhoto = os.getcwd() + '/latest.gif'
 im = Image.open(latestPhoto)
