@@ -41,7 +41,8 @@ from six.moves import queue
 # Audio recording parameters
 #RATE = 16000
 RATE = 44100
-
+#RATE = 32000
+#RATE = 48000
 CHUNK = int(RATE / 10)  # 100ms
 
 

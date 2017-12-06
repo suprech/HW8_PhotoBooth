@@ -1,11 +1,12 @@
 import os
+import sys
+from ctypes import * # for error handling
 import shutil
 import datetime
 from time import gmtime, strftime, sleep
 import threading
 
 import voice_recog
-import asd
 
 import picamera
 from guizero import *
@@ -14,13 +15,26 @@ from PIL import Image
 
 
 #######################################################
-# Global Objects initialization
-#######################################################
+# Global Objects initialization #######################################################
 photoOutput = str()
 latestPhoto = os.getcwd() + '/latest.gif'
 im = Image.open(latestPhoto)
 tempImg = Image.open(latestPhoto) 
 
+
+#######################################################
+# function for disabling ALSA warning
+#######################################################
+def py_error_handler(filename, line, function, err, fmt):
+    pass
+
+if(sys.platform == 'linux'):
+    ERROR_HANDLER_FUNC = CFUNCTYPE(None, c_char_p, c_int, c_char_p, c_int, c_char_p)
+
+    c_error_handler = ERROR_HANDLER_FUNC(py_error_handler)
+
+    asound = cdll.LoadLibrary('libasound.so')
+    asound.snd_lib_error_set_handler(c_error_handler)
 
 
 #######################################################
@@ -31,7 +45,7 @@ camera.resolution = (800, 480)
 #camera.hflip = True
 
 camera.start_preview()
-camera.preview.window = (500, 500, 800, 480)
+camera.preview.window = (1000, 100, 800, 480)
 camera.preview.fullscreen = False
 
 
@@ -58,11 +72,6 @@ def TakePicture():
 
     im = Image.open(photoOutput)
     tempImg = im
-
-
-
-def Func():
-    print("Hello World")
 
 
 #######################################################
@@ -146,6 +155,7 @@ def Grey():
 def voice():
     while True:
         print("listening...")
+        sleep(1)
         cmd = voice_recog.main().lower()
         print("speech was {}".format(cmd))
 
@@ -175,10 +185,7 @@ def voice():
             continue
 
 
-
-
 if __name__ == '__main__':
-
     #######################################################
     # multi-threading for voice recognization
     #######################################################
@@ -204,16 +211,13 @@ if __name__ == '__main__':
     ButtonForWebServer = PushButton(box, UploadToServer, text="Upload to WebServer", grid = [0,3])
     ButtonForPrint = PushButton(box, PhotoPrinter, text="Print", grid = [0,4])
 
-
     # button rendering : Filter Effect menu
     box2 = Box(app, layout="grid", grid=[2,0])
     ButtonTemp1 = PushButton(box2, Sepia, text="Sepia", grid = [0,0])
     ButtonTemp2 = PushButton(box2, Grey, text="GreyScale", grid = [0,1])
 
-
     # picture rendering
     guiPictureBefore = Picture(app, 'init.gif', grid = [4,0])
 
-    
     # gui display start
     app.display()

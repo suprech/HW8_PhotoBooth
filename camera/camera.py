@@ -10,7 +10,7 @@ camera.rotation = 180
 camera.framerate = 24
 #camera.start_preview(fullscreen = False, window=(150,50,1920,1080))
 camera.start_preview(fullscreen = False)
-camera.preview.window = (0, 0, 1280, 720)
+camera.preview.window = (1000, 100, 800, 480)
 
 
 def screenshot():
@@ -32,4 +32,5 @@ print("Camera Module Start")
 
 # tests
 if __name__ == '__main__':
-    screenshot()
+    while True:
+        time.sleep(1)
