@@ -39,7 +39,9 @@ from six.moves import queue
 # [END import_libraries]
 
 # Audio recording parameters
-RATE = 16000
+#RATE = 16000
+RATE = 44100
+
 CHUNK = int(RATE / 10)  # 100ms
 
 
@@ -184,7 +186,6 @@ def main():
                     for content in audio_generator)
 
         responses = client.streaming_recognize(streaming_config, requests)
-        print(type(responses))
 
         # Now, put the transcription responses to use.
         return listen_print_loop(responses)

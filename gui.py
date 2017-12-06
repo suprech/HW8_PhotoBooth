@@ -4,6 +4,9 @@ import datetime
 from time import gmtime, strftime, sleep
 import threading
 
+import voice_recog
+import asd
+
 import picamera
 from guizero import *
 import Filter
@@ -142,8 +145,36 @@ def Grey():
 #######################################################
 def voice():
     while True:
-        print("Hello World")
-        sleep(1)
+        print("listening...")
+        cmd = voice_recog.main().lower()
+        print("speech was {}".format(cmd))
+
+        if(cmd == "picture"):
+            NewPicture()
+
+        elif(cmd == "filter"):
+            Filter_Back()
+
+        elif(cmd == "sepia"):
+            Sepia()
+
+        elif(cmd == "grey"):
+            Grey()
+
+        elif(cmd == "upload"):
+            UploadToServer()
+
+        elif(cmd == "print"):
+            PhotoPrinter()
+
+        elif(cmd == "email"):
+            SendEmail()
+
+        else:
+            print("Try Again")
+            continue
+
+
 
 
 if __name__ == '__main__':
