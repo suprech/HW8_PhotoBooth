@@ -156,23 +156,23 @@ def Grey():
 def voice():
     while True:
         print("listening...")
-        sleep(1)
+        #sleep(1)
         cmd = voice_recog.main().lower()
         print("speech was {}".format(cmd))
 
-        if(cmd == "picture"):
+        if(cmd == "picture" or cmd == "take a picture"):
             NewPicture()
 
         elif(cmd == "filter"):
             Filter_Back()
 
-        elif(cmd == "sepia"):
+        elif(cmd == "first filter"):
             Sepia()
 
-        elif(cmd == "grey"):
+        elif(cmd == "second filter"):
             Grey()
 
-        elif(cmd == "upload"):
+        elif(cmd == "upload picture"):
             UploadToServer()
 
         elif(cmd == "print"):
