@@ -43,11 +43,9 @@ if(sys.platform == 'linux'):
 #######################################################
 camera = picamera.PiCamera()
 camera.resolution = (800, 480)
+camera.rotation = 180
 #camera.hflip = True
 
-camera.start_preview()
-camera.preview.window = (1000, 100, 800, 480)
-camera.preview.fullscreen = False
 
 
 #######################################################
@@ -79,7 +77,28 @@ def TakePicture():
 # Gui Menu CallBack Function
 #######################################################
 def NewPicture():
+    global camera
+    camera.start_preview()
+    camera.preview.window = (500, 500, 800, 480)
+    #camera.preview.window = (1000, 100, 800, 480)
+    #camera.preview.window = (1000, 100, 1920, 1080)
+    camera.preview.fullscreen = False
+
+    camera.annotate_text = '5'
+    sleep(1)
+    camera.annotate_text = '4'
+    sleep(1)
+    camera.annotate_text = '3'
+    sleep(1)
+    camera.annotate_text = '2'
+    sleep(1)
+    camera.annotate_text = '1'
+    sleep(1)
+    camera.annotate_text = ''
+
     TakePicture()
+
+    camera.stop_preview()
 
 
 def Filter_Back():
@@ -166,10 +185,10 @@ def voice():
         elif(cmd == "filter"):
             Filter_Back()
 
-        elif(cmd == "first filter"):
+        elif(cmd == "first filter" or cmd == "sepia"):
             Sepia()
 
-        elif(cmd == "second filter"):
+        elif(cmd == "second filter" or cmd == "grey"):
             Grey()
 
         elif(cmd == "upload picture"):
@@ -191,7 +210,7 @@ if __name__ == '__main__':
     # multi-threading for voice recognization
     #######################################################
     t = threading.Thread(target=voice)
-    t.start()
+    #t.start()
 
 
     #######################################################
@@ -216,6 +235,8 @@ if __name__ == '__main__':
     box2 = Box(app, layout="grid", grid=[2,0])
     ButtonTemp1 = PushButton(box2, Sepia, text="Sepia", grid = [0,0])
     ButtonTemp2 = PushButton(box2, Grey, text="GreyScale", grid = [0,1])
+    ButtonTemp2 = PushButton(box2, Grey, text="Filter 3", grid = [0,2])
+    ButtonTemp2 = PushButton(box2, Grey, text="Filter 4", grid = [0,3])
 
     # picture rendering
     guiPictureBefore = Picture(app, 'init.gif', grid = [4,0])
