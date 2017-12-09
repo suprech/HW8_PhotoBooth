@@ -223,8 +223,10 @@ if __name__ == '__main__':
     #######################################################
     # multi-threading for voice recognization
     #######################################################
-    t = threading.Thread(target=call_cloud_speech)
-    #t.start()
+    t1 = threading.Thread(target=call_cloud_speech)
+    t2 = threading.Thread(target=call_alexa)
+    #t1.start()
+    #t2.start()
 
 
     #######################################################
