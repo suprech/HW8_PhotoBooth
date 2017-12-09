@@ -193,7 +193,7 @@ def message_selection(cmd):
     global call_list
 
     if cmd in call_list:
-        return call_list[cmd]()
+        call_list[cmd]()
 
     else:
         print("Try Again")
