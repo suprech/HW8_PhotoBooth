@@ -1,4 +1,3 @@
-#from PIL import * 
 from PIL import Image
 from PIL import ImageFilter
 
@@ -30,8 +29,8 @@ def BlurImg(Img):
     return Img.filter(ImageFilter.BLUR)
 
 
-# GreyScale(img)
-def GreyScale(ImgObj):
+# GrayScale(img)
+def GrayScale(ImgObj):
     return ImgObj.convert(mode='L')
 
 
