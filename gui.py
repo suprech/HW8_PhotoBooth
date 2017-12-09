@@ -11,7 +11,7 @@ from guizero import *
 from PIL import Image
 
 # user module
-import voice_recog
+import cloud_speech
 import Filter
 import pi_readqueue
 
@@ -116,7 +116,7 @@ def Filter_Back():
 
 
 def SendEmail():
-    info("Upload Success", "uploaded")
+    info("Success", "sended")
     pass
 
 
@@ -173,49 +173,50 @@ def Gray():
 
 
 #######################################################
-# Voice Recognition
+# Voice Recognition Methods
 #######################################################
+call_list = {
+        "picture" : NewPicture,
+        "take a picture" : NewPicture,
+        "filter" : Filter_Back,
+        "first filter" : Sepia,
+        "sepia" : Sepia,
+        "second filter" : Gray, 
+        "gray" : Gray,
+        "grey" : Gray,
+        "upload picture" : UploadToServer,
+        "print" : PhotoPrinter,
+        "email" : SendEmail
+        }
+
 def message_selection(cmd):
-    pass
+    global call_list
+
+    if cmd in call_list:
+        return func_list[cmd]()
+
+    else:
+        print("Try Again")
 
 
 # Google Cloud Speech
 def call_cloud_speech():
+    print("initializaing Google Cloud Speech")
     while True:
         print("listening...")
-        cmd = voice_recog.main().lower()
+        cmd = cloud_speech.main().lower()
         print("speech was {}".format(cmd))
-
-        if(cmd == "picture" or cmd == "take a picture"):
-            NewPicture()
-
-        elif(cmd == "filter"):
-            Filter_Back()
-
-        elif(cmd == "first filter" or cmd == "sepia"):
-            Sepia()
-
-        elif(cmd == "second filter" or cmd == "grey"):
-            Grey()
-
-        elif(cmd == "upload picture"):
-            UploadToServer()
-
-        elif(cmd == "print"):
-            PhotoPrinter()
-
-        elif(cmd == "email"):
-            SendEmail()
-
-        else:
-            print("Try Again")
-            continue
+        message_selection(cmd)
 
 
 # Amazon ALEXA
 def call_alexa():
-    cmd = pi_readqueue.message_handler()
-    message_selection(cmd)
+    print("initializaing Amazon ALEXA")
+    while True:
+        print("listening...")
+        cmd = pi_readqueue.message_handler().lower()
+        print("speech was {}".format(cmd))
+        message_selection(cmd)
 
 
 if __name__ == '__main__':
@@ -252,9 +253,9 @@ if __name__ == '__main__':
     # button rendering : Filter Effect menu
     box2 = Box(app, layout="grid", grid=[2,0])
     ButtonTemp1 = PushButton(box2, Sepia, text="Sepia", grid = [0,0])
-    ButtonTemp2 = PushButton(box2, Grey, text="GreyScale", grid = [0,1])
-    ButtonTemp3 = PushButton(box2, Grey, text="Filter 3", grid = [0,2])
-    ButtonTemp4 = PushButton(box2, Grey, text="Filter 4", grid = [0,3])
+    ButtonTemp2 = PushButton(box2, Gray, text="GrayScale", grid = [0,1])
+    ButtonTemp3 = PushButton(box2, Gray, text="Filter 3", grid = [0,2])
+    ButtonTemp4 = PushButton(box2, Gray, text="Filter 4", grid = [0,3])
 
     # picture rendering
     guiPictureBefore = Picture(app, 'init.gif', grid = [4,0])
