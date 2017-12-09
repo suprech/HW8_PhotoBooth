@@ -3,12 +3,16 @@ import os
 import time
 import subprocess
 import sys
+import json
 
-# hard coded credentials
-access_key = "AKIAJZOZA5WTPBDERNZQ"
-access_secret = "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" 
-region = "us-east-1" 
-queue_url = "https://sqs.us-east-1.amazonaws.com/762995444827/testQueue"
+
+# loading credentials from json file
+with open('credential_alexa.json') as json_data:
+    d = json.load(json_data)
+    access_key = d["access_key"]
+    access_secret = d["access_secret"]
+    region = d["region"]
+    queue_url = d["queue_url"]
 
 
 # client instance
