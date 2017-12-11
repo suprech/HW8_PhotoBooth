@@ -16,7 +16,6 @@ import Filter
 import pi_readqueue
 
 
-
 #######################################################
 # Global Objects initialization
 #######################################################
@@ -47,9 +46,8 @@ if(sys.platform == 'linux'):
 #######################################################
 camera = picamera.PiCamera()
 camera.resolution = (800, 480)
-camera.rotation = 180
+#camera.rotation = 180
 #camera.hflip = True
-
 
 
 #######################################################
@@ -73,6 +71,7 @@ def TakePicture():
     guiPictureBefore.set(latestPhoto)
 
     im = Image.open(photoOutput)
+    im.save('temp.jpg')
     tempImg = im
 
 
@@ -86,6 +85,7 @@ def NewPicture():
     camera.preview.fullscreen = False
 
     # count down
+    sleep(1)
     camera.annotate_text = '5'
     sleep(1)
     camera.annotate_text = '4'
@@ -110,7 +110,6 @@ def Filter_Back():
     # image restore
     im = tempImg
     im.save('temp.jpg')
-
     guiPictureBefore.set(latestPhoto)
 
 
@@ -121,15 +120,14 @@ def SendEmail():
 
 def UploadToServer():
     savename = datetime.datetime.now().strftime('%y%m%d-%H%M%s') + '.jpg'
-
     shutil.copyfile('temp.jpg', 
             '/home/pi/HW8_PhotoBooth/ImageStorage/' + savename)
-
-    #info("Upload Success", "uploaded")
+    print("Upload Success"
 
 
 def PhotoPrinter():
-    pass
+    printer_cmd = "lp -d Canon_SELPHY_CP1200 " + os.getcwd() + "/temp.jpg"
+    os.system(printer_cmd)
 
 
 #######################################################
@@ -176,9 +174,11 @@ def Gray():
 #######################################################
 call_list = {
         "picture": NewPicture,
+        "shutter": NewPicture,
         "take picture": NewPicture,
         "take a picture": NewPicture,
         "filter": Filter_Back,
+        "undo": Filter_Back,
         "first filter": Sepia,
         "sepia": Sepia,
         "second filter": Gray,
@@ -206,8 +206,8 @@ def message_selection(cmd):
         print("Try Again")
 
 
-'''
 # Google Cloud Speech
+'''
 def call_cloud_speech():
     print("initializaing Google Cloud Speech")
     while True:
@@ -255,8 +255,8 @@ if __name__ == '__main__':
             text="New Picture", grid = [0,0])
     ButtonForFilter = PushButton(box, Filter_Back, 
             text="Filter", grid = [0,1])
-    ButtonForDropbox = PushButton(box, SendEmail, 
-            text="Send to Email", grid = [0,2])
+    #ButtonForDropbox = PushButton(box, SendEmail, 
+    #        text="Send to Email", grid = [0,2])
     ButtonForWebServer = PushButton(box, UploadToServer, 
             text="Upload to WebServer", grid = [0,3])
     ButtonForPrint = PushButton(box, PhotoPrinter, 
@@ -266,8 +266,6 @@ if __name__ == '__main__':
     box2 = Box(app, layout="grid", grid=[2,0])
     ButtonTemp1 = PushButton(box2, Sepia, text="Sepia", grid = [0,0])
     ButtonTemp2 = PushButton(box2, Gray, text="GrayScale", grid = [0,1])
-    ButtonTemp3 = PushButton(box2, Gray, text="Filter 3", grid = [0,2])
-    ButtonTemp4 = PushButton(box2, Gray, text="Filter 4", grid = [0,3])
 
     # picture rendering
     #guiPictureBefore = Picture(app, 'init.gif', grid = [4,0])

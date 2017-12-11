@@ -32,10 +32,15 @@ def pop_message(client, url):
             MaxNumberOfMessages = 10)
 
     # last message posted becomes messages
-    message = response['Messages'][0]['Body']
-    receipt = response['Messages'][0]['ReceiptHandle']
-    client.delete_message(QueueUrl = url, ReceiptHandle = receipt)
-    return message
+    try:
+        message = response['Messages'][0]['Body']
+        receipt = response['Messages'][0]['ReceiptHandle']
+        client.delete_message(QueueUrl = url, ReceiptHandle = receipt)
+        return message
+
+    except:
+        return "queue is empty"
+
 
 
 # return the message for gui.py
