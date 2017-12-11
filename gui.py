@@ -69,9 +69,8 @@ def TakePicture():
     #thumbnailSize = (400, 400)
     gif_img = Image.open(photoOutput)
     #gif_img.thumbnail(thumbnailSize, Image.ANTIALIAS)
-    gif_img.save(latestPhoto,'gif')
+    gif_img.save(latestPhoto, 'gif')
     guiPictureBefore.set(latestPhoto)
-
 
     im = Image.open(photoOutput)
     tempImg = im
@@ -176,18 +175,26 @@ def Gray():
 # Voice Recognition Methods
 #######################################################
 call_list = {
-        "picture" : NewPicture,
-        "take a picture" : NewPicture,
-        "filter" : Filter_Back,
-        "first filter" : Sepia,
-        "sepia" : Sepia,
-        "second filter" : Gray, 
-        "gray" : Gray,
-        "grey" : Gray,
-        "upload picture" : UploadToServer,
-        "print" : PhotoPrinter,
-        "email" : SendEmail
+        "picture": NewPicture,
+        "take picture": NewPicture,
+        "take a picture": NewPicture,
+        "filter": Filter_Back,
+        "first filter": Sepia,
+        "sepia": Sepia,
+        "second filter": Gray,
+        "gray": Gray,
+        "grey": Gray,
+        "upload": UploadToServer,
+        "upload picture": UploadToServer,
+        "upload a picture": UploadToServer,
+        "upload the picture": UploadToServer,
+        "print": PhotoPrinter,
+        "printer": PhotoPrinter,
+        "photo printer": PhotoPrinter,
+        "email": SendEmail,
+        "send": SendEmail
         }
+
 
 def message_selection(cmd):
     global call_list
@@ -213,6 +220,7 @@ def call_cloud_speech():
 def call_alexa():
     print("initializaing Amazon ALEXA")
     while True:
+        sleep(0.5)
         print("listening...")
         cmd = pi_readqueue.message_handler().lower()
         print("speech was {}".format(cmd))
@@ -260,7 +268,8 @@ if __name__ == '__main__':
     ButtonTemp4 = PushButton(box2, Gray, text="Filter 4", grid = [0,3])
 
     # picture rendering
-    guiPictureBefore = Picture(app, 'init.gif', grid = [4,0])
+    #guiPictureBefore = Picture(app, 'init.gif', grid = [4,0])
+    guiPictureBefore = Picture(app, 'latest.gif', grid = [4,0])
 
     # gui display start
     app.display()
