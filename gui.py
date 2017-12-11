@@ -11,7 +11,7 @@ from guizero import *
 from PIL import Image
 
 # user module
-import cloud_speech
+#import cloud_speech
 import Filter
 import pi_readqueue
 
@@ -206,6 +206,7 @@ def message_selection(cmd):
         print("Try Again")
 
 
+'''
 # Google Cloud Speech
 def call_cloud_speech():
     print("initializaing Google Cloud Speech")
@@ -214,6 +215,7 @@ def call_cloud_speech():
         cmd = cloud_speech.main().lower()
         print("speech was {}".format(cmd))
         message_selection(cmd)
+'''
 
 
 # Amazon ALEXA
@@ -231,10 +233,10 @@ if __name__ == '__main__':
     #######################################################
     # multi-threading for voice recognization
     #######################################################
-    t1 = threading.Thread(target=call_cloud_speech)
+    #t1 = threading.Thread(target=call_cloud_speech)
     t2 = threading.Thread(target=call_alexa)
     #t1.start()
-    #t2.start()
+    t2.start()
 
 
     #######################################################
