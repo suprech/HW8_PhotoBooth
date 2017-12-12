@@ -120,14 +120,15 @@ def SendEmail():
 
 def UploadToServer():
     savename = datetime.datetime.now().strftime('%y%m%d-%H%M%s') + '.jpg'
-    shutil.copyfile('temp.jpg', 
-            '/home/pi/HW8_PhotoBooth/ImageStorage/' + savename)
-    print("Upload Success"
+    shutil.copyfile('temp.jpg',
+                    '/home/pi/HW8_PhotoBooth/ImageStorage/' + savename)
+    print("Upload Success")
 
 
 def PhotoPrinter():
     printer_cmd = "lp -d Canon_SELPHY_CP1200 " + os.getcwd() + "/temp.jpg"
     os.system(printer_cmd)
+    print("Print request is accepted")
 
 
 #######################################################
@@ -252,15 +253,15 @@ if __name__ == '__main__':
     # button rendering : main menu
     box = Box(app, layout="grid", grid=[0,0])
     ButtonForCapture = PushButton(box, NewPicture, 
-            text="New Picture", grid = [0,0])
+                                  text="New Picture", grid = [0,0])
     ButtonForFilter = PushButton(box, Filter_Back, 
-            text="Filter", grid = [0,1])
+                                 text="Filter", grid = [0,1])
     #ButtonForDropbox = PushButton(box, SendEmail, 
     #        text="Send to Email", grid = [0,2])
     ButtonForWebServer = PushButton(box, UploadToServer, 
-            text="Upload to WebServer", grid = [0,3])
+                                    text="Upload to WebServer", grid = [0,3])
     ButtonForPrint = PushButton(box, PhotoPrinter, 
-            text="Print", grid = [0,4])
+                                text="Print", grid = [0,4])
 
     # button rendering : Filter Effect menu
     box2 = Box(app, layout="grid", grid=[2,0])
